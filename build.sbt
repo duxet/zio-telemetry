@@ -19,15 +19,15 @@ inThisBuild(
         url("https://github.com/runtologist")
       )
     ),
-    pgpPassphrase := sys.env.get("PGP_PASSWORD").map(_.toArray),
-    pgpPublicRing := file("/tmp/public.asc"),
-    pgpSecretRing := file("/tmp/secret.asc"),
     scmInfo := Some(
       ScmInfo(
         url("https://github.com/zio/zio-telemetry/"),
         "scm:git:git@github.com:zio/zio-telemetry.git"
       )
-    )
+    ),
+    githubOwner := "duxet",
+    githubRepository := "zio-telemetry",
+    publishMavenStyle := true
   )
 )
 
@@ -41,7 +41,7 @@ lazy val root =
   project
     .in(file("."))
     .settings(skip in publish := true)
-    .aggregate(opentracing, opentelemetry, opencensus, opentracingExample, opentelemetryExample)
+    .aggregate(opentelemetry)
 
 lazy val opentracing =
   project
@@ -54,6 +54,7 @@ lazy val opentelemetry =
     .in(file("opentelemetry"))
     .settings(stdSettings("zio-opentelemetry"))
     .settings(libraryDependencies := Dependencies.opentelemetry)
+    .settings(publishTo := githubPublishTo.value)
 
 lazy val opencensus = project
   .in(file("opencensus"))

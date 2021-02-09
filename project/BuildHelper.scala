@@ -9,7 +9,8 @@ object BuildHelper {
     scalaVersion in ThisBuild := Scala212,
     scalacOptions := stdOptions ++ extraOptions(scalaVersion.value),
     libraryDependencies += compilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    incOptions ~= (_.withLogRecompileOnMacro(false))
+    incOptions ~= (_.withLogRecompileOnMacro(false)),
+    publishArtifact in (Compile, packageDoc) := false
   )
 
   private val Scala212 = "2.12.12"
